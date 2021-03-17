@@ -13,6 +13,12 @@ import User from "../models/User"
 
 class SessionController{
 
+    async index(req, res){
+        console.log('Buscando todos os usuários')
+        const user = await User.find()
+        return res.json({ user })
+    }
+
      async store(req, res){
         const { email } = req.body
 
@@ -25,6 +31,7 @@ class SessionController{
         
         return res.json(user)
     }
+
 
 }
 

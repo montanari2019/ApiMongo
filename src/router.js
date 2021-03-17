@@ -12,7 +12,10 @@ return res.json({ menssage: `Api rodando` })
 })
 
 routes.post('/sessionsUser', SessionController.store)
+routes.get('/sessions', SessionController.index)
 
 routes.post('/houses', upload.single('photoHouse'), HouseController.store)
+routes.get('/houses', HouseController.index)
+routes.put('/houses/:house_id',upload.single('photoHouse'), HouseController.update)
 
 export default routes
