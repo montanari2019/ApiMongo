@@ -67,6 +67,15 @@ class HouseController {
         return res.json({ houses })
 
     }
+
+    async destroy (req, res) {
+        const { house_id } = req.body
+        const { user_id } = req.headers 
+
+        await House.findByIdAndDelete({ _id: house_id})
+
+        return res.json({ menssage: 'Casa excluida' })
+    }
 }
 
 export default new HouseController();
