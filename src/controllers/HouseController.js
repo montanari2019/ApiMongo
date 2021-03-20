@@ -5,7 +5,7 @@ import User from '../models/User'
 class HouseController {
 
     async index (req, res){
-        console.log('Get houses funcionando')
+        console.log(req.user._doc)
 
         // const { status } = req.query
 
@@ -17,12 +17,11 @@ class HouseController {
     async store(req, res){
         const { filename } = req.file
         const { description,price,location,status } = req.body
-        const { user_id } = req.headers
 
         const house = await House.create({
-            user: user_id,
+            user: req.user,
             photoHouse: filename,
-            descriptio: description,
+            description: description,
             price: price,
             location: location,
             status: status,
@@ -77,5 +76,6 @@ class HouseController {
         return res.json({ menssage: 'Casa excluida' })
     }
 }
+
 
 export default new HouseController();
