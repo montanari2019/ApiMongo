@@ -33,6 +33,8 @@ class HouseController {
 
     async update (req, res){
 
+        //Tentando rodar o git bash
+
         console.log('Controller de Alteração Iniciando')
 
         const { filename } = req.file
