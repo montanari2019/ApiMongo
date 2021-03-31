@@ -20,19 +20,7 @@ class SessionController {
         return res.json({ user })
     }
 
-    // async store(req, res) {
-    //     const { email } = req.body
-
-
-    //     let user = await User.findOne({ email })
-
-    //     if (!user) {
-    //         user = await User.create({ email })
-    //     }
-
-    //     return res.json(user)
-    // }
-
+ 
     async store(req, res) {
         const { _id, ...body } = req.body;
 
@@ -75,6 +63,12 @@ class SessionController {
           return res.status(500).json(error)
         }
       }
+
+    async destroy (req,res) {
+      const { user_id } = req.headers 
+        await User.findByIdAndDelete({ _id: user_id})
+        return res.json({ menssage: 'Usuário escluído' })
+    }
 
 }
 

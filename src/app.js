@@ -7,6 +7,7 @@ import { Strategy } from "passport-http-bearer";
 import User from './models/User'
 import jwt from "jsonwebtoken";
 import { secret } from './config/secret.json'
+import cors from 'cors'
 
 class App {
 
@@ -23,6 +24,8 @@ class App {
 
     middlewares() {
 
+        this.server.use(cors())
+
         this.server.use(
             '/file',
             express.static(path.resolve(__dirname, '..', 'uploads'))
@@ -33,6 +36,7 @@ class App {
         passport.use(
             new Strategy(async (token, cb) => {
                 try {
+
                     let decoded = jwt.verify(token, secret)
 
                     if (!decoded) {

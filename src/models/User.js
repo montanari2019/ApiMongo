@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken'
 const UserSchema = new Schema({
     email: String,
     name:String,
-    password: String
+    password: String,
+    admin: Boolean
 })
 
 UserSchema.methods.authenticate = async (email, password) => {

@@ -17,9 +17,11 @@ return res.json({ menssage: `Api rodando` })
 routes.post('/sessionsUser', SessionController.store)
 routes.post('/sessions/authenticate', SessionController.authenticate)
 routes.get('/sessions', SessionController.index)
+routes.delete('/sessionDelete',secureRoute, SessionController.destroy)
 
 routes.post('/houses', secureRoute ,  upload.single('photoHouse'), HouseController.store)
-routes.get('/houses', secureRoute, HouseController.index)
+routes.get('/housesList', secureRoute, HouseController.index)
+routes.get('/housesUser', secureRoute, HouseController.shows)
 routes.put('/houses/:house_id', secureRoute,upload.single('photoHouse'), HouseController.update)
 routes.delete('/houses', secureRoute, HouseController.destroy)
 
