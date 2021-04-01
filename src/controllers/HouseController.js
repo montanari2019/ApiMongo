@@ -1,13 +1,12 @@
-
 import House from '../models/House'
 import User from '../models/User'
 
 class HouseController {
 
     async index (req, res){
-        console.log(req.user._doc)
-
+        
         const houses = await House.find()
+
 
         return res.json({ houses })
     }
