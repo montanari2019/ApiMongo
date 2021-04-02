@@ -2,18 +2,21 @@ import House from '../models/House'
 import Reserved from '../models/Reserved'
 import User from '../models/User'
 
+
 class ReservedController{
 
 
     async index (req, res) {
         const { user_id } = req.headers
 
-        const reservs = await Reserved.find({ user: user_id })
+        const reservs = await Reserved.find({ user: user_id }).populate('house')
 
         return res.json(reservs)
     }
 
     async store (req, res) {
+
+
 
         console.log('Entrando na função')
         

@@ -1,12 +1,12 @@
 import House from '../models/House'
 import User from '../models/User'
+import * as Yup from 'yup'
 
 class HouseController {
 
     async index (req, res){
         
         const houses = await House.find()
-
 
         return res.json({ houses })
     }
@@ -20,8 +20,22 @@ class HouseController {
     }
 
     async store(req, res){
+
         const { filename } = req.file
         const { description,price,location,status } = req.body
+
+
+        const schema = Yup.object().shape({
+            description: Yup.string().required(),
+            price: Yup.number().required(),
+            location: Yup.string().required(),
+            status: Yup.boolean().required()
+        })
+
+        if(!(await schema.isValid(req.body))){
+            console.log('Entrando na validação')
+            return res.status(400).json({error: 'Falha na validação'})
+        }
 
         const house = await House.create({
             user: req.user,
@@ -33,6 +47,7 @@ class HouseController {
         })  
 
         return res.json({ house })    
+        // return res.json({ ok: true})
     }
 
     async update (req, res){
@@ -53,6 +68,18 @@ class HouseController {
         if (String(user._id) !== String(house.user)){
             console.log('Verificando usuário')
             return res.status(401).json({message: 'User Invalid'})
+        }
+
+        const schema = Yup.object().shape({
+            description: Yup.string().required(),
+            price: Yup.number().required(),
+            location: Yup.string().required(),
+            status: Yup.boolean().required()
+        })
+
+        if(!(await schema.isValid(req.body))){
+            console.log('Entrando na validação')
+            return res.status(400).json({error: 'Falha na validação'})
         }
 
         const houses = await House.updateOne({ _id: house_id },{

@@ -11,6 +11,7 @@ Destroy: Qunado queremos deletar uma sessão
 import User from "../models/User"
 import { passwordHash } from '../config/secret.json'
 import CryptoJS from "crypto-js"
+import * as Yup from 'yup'
 
 class SessionController {
 
@@ -22,13 +23,30 @@ class SessionController {
 
  
     async store(req, res) {
-        const { _id, ...body } = req.body;
+        const { _id, email, name, password, admin} = req.body;
 
-        let model = new User(body);
+        // const schema = Yup.object().shape({
+        //   email: Yup.string().email().require(),
+        //   name: Yup.string().required(),
+        //   password: Yup.string().required(),
+        //   admin: Yup.boolean.require()
+        // })
+
+        const user = {
+          email,
+          name,
+          password,
+          admin
+        }
+
+        console.log('USER'+ user)
+
+        let model = new User(user);
 
         model.password = CryptoJS.HmacSHA1(model.password, passwordHash).toString()
 
         try {
+          
             model = await model.save();
 
             if (model === null) {
